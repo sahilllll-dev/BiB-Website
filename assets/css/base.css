@@ -1,0 +1,101 @@
+@layer base {
+  :root {
+    color-scheme: light;
+    --layout-max-width: 1600px;
+    --layout-width-desktop: 90vw;
+    --layout-width-tablet: 92vw;
+    --layout-width-phone: calc(100vw - 1.5rem);
+    --layout-breakpoint-phone: 480px;
+    --layout-breakpoint-tablet: 768px;
+    --layout-breakpoint-layout: 1200px;
+    --layout-breakpoint-wide: 1680px;
+    --surface: #f7f3ea;
+    --surface-strong: #ffffff;
+    --surface-muted: #eee7d8;
+    --ink: #0f172a;
+    --ink-soft: #334155;
+    --ink-muted: #64748b;
+    --brand: #0e6d66;
+    --brand-accent: #c35b34;
+    --brand-gold: #c7b792;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-surface text-dark antialiased font-sans;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 9999px;
+    filter: blur(18px);
+    opacity: 0.8;
+  }
+
+  body::before {
+    top: -10rem;
+    left: -8rem;
+    height: 24rem;
+    width: 24rem;
+    background: radial-gradient(circle, rgba(14, 109, 102, 0.22), transparent 70%);
+  }
+
+  body::after {
+    right: -10rem;
+    bottom: -8rem;
+    height: 28rem;
+    width: 28rem;
+    background: radial-gradient(circle, rgba(195, 91, 52, 0.14), transparent 72%);
+  }
+
+  img,
+  picture,
+  svg {
+    @apply block max-w-full;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  a {
+    @apply text-inherit no-underline transition-colors duration-200;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol {
+    @apply m-0;
+  }
+
+  ul,
+  ol {
+    @apply list-none p-0;
+  }
+
+  ::selection {
+    background: rgba(14, 109, 102, 0.18);
+  }
+}
