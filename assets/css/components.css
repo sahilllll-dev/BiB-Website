@@ -459,8 +459,8 @@
     }
 
     .home-conviction-title {
-      max-width: 10.4ch;
-      font-size: clamp(2.15rem, 8.2vw, 3.4rem);
+      max-width: 100%;
+      font-size: clamp(1.95rem, 7.6vw, 3rem);
       line-height: 0.95;
     }
 
@@ -1941,20 +1941,30 @@
     }
 
     .home-hero-title {
-      max-width: 10.8ch;
+      display: grid;
+      width: 100%;
+      max-width: 100%;
+      justify-items: center;
+      font-size: clamp(1.55rem, 7vw, 1.75rem);
       line-height: 0.95;
+      text-align: center;
+      letter-spacing: -0.055em;
+    }
+
+    .home-hero-title-line {
+      white-space: nowrap;
     }
 
     .home-hero-title-accent {
       margin-left: 0.15rem;
-      font-size: clamp(1.3rem, 0.85rem + 3vw, 1.95rem);
+      font-size: clamp(0.95rem, 4vw, 1.1rem);
     }
 
     .home-hero-description {
-      max-width: 20rem;
+      max-width: 18.5rem;
       margin-top: 1.35rem;
-      font-size: 0.98rem;
-      line-height: 1.6;
+      font-size: clamp(1rem, 4.4vw, 1.12rem);
+      line-height: 1.55;
     }
 
     .home-hero-scroll-cue {
@@ -2110,10 +2120,19 @@
       padding: 4.5rem 1rem 4.75rem;
     }
 
+    .home-systems-header {
+      width: 100%;
+    }
+
     .home-systems-title {
-      max-width: 8.4ch;
-      font-size: clamp(2.1rem, 8vw, 3.3rem);
+      width: 100%;
+      max-width: 100%;
+      font-size: clamp(1.75rem, 7.1vw, 2.55rem);
       line-height: 0.94;
+    }
+
+    .home-systems-line {
+      white-space: nowrap;
     }
 
     .systems-stage {
@@ -2128,7 +2147,7 @@
 
     .gravity-card-top {
       gap: 0.8rem;
-      padding: 1rem 0.95rem 0.85rem;
+      padding: 1rem 0.95rem 3.85rem;
     }
 
     .gravity-card-icon {
@@ -2331,7 +2350,7 @@
 
     .sticky-stack-card-header {
       min-height: auto;
-      padding: 1rem 0 1rem;
+      padding: 1rem 1rem 1rem;
     }
 
     .sticky-stack-card-title {
@@ -2452,67 +2471,167 @@
     @apply mt-auto;
     background: #f9f9fb;
     color: #0f172a;
+    position: relative;
+    overflow: clip;
+    padding: clamp(4rem, 8vh, 5.5rem) 0 1.7rem;
   }
 
-  .footer-inner {
-    @apply grid gap-12 py-18;
+  .footer-watermark {
+    position: absolute;
+    inset: -0.75rem 0 auto auto;
+    font-size: clamp(18rem, 38vw, 41rem);
+    font-weight: 600;
+    line-height: 0.8;
+    letter-spacing: -0.08em;
+    color: rgba(15, 23, 42, 0.03);
+    pointer-events: none;
+    user-select: none;
   }
 
-  .footer-brand {
-    @apply max-w-md;
+  .footer-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1.45fr);
+    gap: clamp(2.5rem, 6vw, 7rem);
+    align-items: start;
   }
 
-  .footer-logo {
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: #0f172a;
+  .footer-intro {
+    max-width: 26rem;
   }
 
-  .footer-note {
-    margin-top: 1.5rem;
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 1.55;
-    color: #0f172a;
+  .footer-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+    color: #111827;
   }
 
-  .footer-copy {
-    @apply mt-4 max-w-md text-sm leading-8;
-    color: rgba(51, 65, 85, 0.84);
+  .footer-description {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: rgba(75, 85, 99, 0.86);
   }
 
-  .footer-nav-grid {
-    @apply grid gap-8 sm:grid-cols-2 lg:grid-cols-3;
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 4vw, 3.5rem);
   }
 
-  .footer-column-title {
-    @apply text-xs font-semibold uppercase tracking-luxe;
-    color: rgba(14, 109, 102, 0.8);
+  .footer-column {
+    min-width: 0;
+  }
+
+  .footer-column-heading {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #111827;
   }
 
   .footer-link-list {
-    @apply mt-4 flex flex-col gap-3;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.78rem;
   }
 
   .footer-link {
-    @apply inline-flex items-center text-sm font-medium transition;
-    color: rgba(51, 65, 85, 0.84);
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    transition: color 180ms ease;
+    color: rgba(75, 85, 99, 0.84);
   }
 
   .footer-link:hover {
     color: #0f172a;
   }
 
-  .footer-meta {
-    @apply flex flex-col gap-4 border-t py-6 text-sm sm:flex-row sm:items-center sm:justify-between;
-    border-color: rgba(15, 23, 42, 0.08);
-    color: rgba(100, 116, 139, 0.9);
+  .footer-legal {
+    position: relative;
+    z-index: 1;
+    margin-top: clamp(5.5rem, 10vh, 8rem);
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    color: rgba(107, 114, 128, 0.9);
   }
 
-  .footer-meta-links {
-    @apply flex flex-wrap gap-5;
+  @media (max-width: 767px) {
+    .site-footer {
+      padding: 3.75rem 0 1.5rem;
+    }
+
+    .footer-watermark {
+      inset: 0 0 auto auto;
+      font-size: clamp(9rem, 38vw, 14rem);
+    }
+
+    .footer-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.75rem;
+    }
+
+    .footer-intro {
+      max-width: 20rem;
+    }
+
+    .footer-title {
+      font-size: 1.25rem;
+    }
+
+    .footer-description {
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    .footer-columns {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .footer-column-heading {
+      font-size: 1.25rem;
+    }
+
+    .footer-link {
+      font-size: 1rem;
+    }
+
+    .footer-legal {
+      margin-top: 3.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .footer-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 3.5rem;
+    }
+
+    .footer-columns {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-watermark {
+      font-size: clamp(13rem, 32vw, 22rem);
+    }
   }
 
   @media (min-width: 768px) {
@@ -2530,11 +2649,6 @@
       padding-left: clamp(1.75rem, 3vw, 3.5rem);
       border-top: 0;
       border-left: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .footer-inner {
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-      align-items: start;
     }
   }
 
@@ -2873,11 +2987,26 @@
       position: relative;
       top: auto;
       left: auto;
-      width: min(100%, 17.5rem);
+      width: min(100%, 19rem);
       max-width: 100%;
+      aspect-ratio: auto;
+      height: auto;
       transform: none !important;
       cursor: default;
       touch-action: auto;
+    }
+
+    .gravity-card-surface {
+      grid-template-rows: auto auto;
+      min-height: 0;
+    }
+
+    .gravity-card-top {
+      min-height: 0;
+    }
+
+    .gravity-card-bottom {
+      min-height: 0;
     }
 
     .gravity-card.is-dragging {
