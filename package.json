@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-  "build": "postcss ./assets/css/tailwind.css -o ./assets/css/style.css --env production",
-  "watch": "postcss ./assets/css/tailwind.css -o ./assets/css/style.css --watch"
+  "build": "postcss ./assets/css/tailwind.css -o ./assets/css/styles.css --env production",
+  "watch": "postcss ./assets/css/tailwind.css -o ./assets/css/styles.css --watch"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
