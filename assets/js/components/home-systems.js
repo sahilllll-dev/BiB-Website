@@ -87,14 +87,20 @@ export const initializeHomeSystems = () => {
       const state = states.get(card);
       const width = card.offsetWidth;
       const height = card.offsetHeight;
-      const maxX = Math.max(0, stageWidth - width);
+      const spillX = width * 0.9;
+      const spillY = height * 0.9;
+      const minX = -spillX;
+      const maxX = Math.max(minX, stageWidth - width + spillX);
+      const minY = -spillY;
       const floorY = Math.max(0, stageHeight - floorOffset - height);
       const initialXPct = readResponsiveX(card, breakpoint);
-      const initialX = clamp(stageWidth * (initialXPct / 100) - width / 2, 0, maxX);
+      const initialX = stageWidth * (initialXPct / 100) - width / 2;
 
       state.width = width;
       state.height = height;
+      state.minX = minX;
       state.maxX = maxX;
+      state.minY = minY;
       state.floorY = floorY;
       state.baseRotation = Number(card.dataset.rotate || 0);
 
@@ -120,8 +126,8 @@ export const initializeHomeSystems = () => {
         state.tilt = 0;
         state.hasLayout = true;
       } else {
-        state.x = clamp(state.x, 0, maxX);
-        state.y = clamp(state.y, 0, floorY);
+        state.x = clamp(state.x, minX, maxX);
+        state.y = clamp(state.y, minY, floorY);
       }
 
       renderCard(state);
@@ -135,8 +141,8 @@ export const initializeHomeSystems = () => {
       return;
     }
 
-    const nextX = clamp(event.clientX - state.stageLeft - state.pointerOffsetX, 0, state.maxX);
-    const nextY = clamp(event.clientY - state.stageTop - state.pointerOffsetY, 0, state.floorY);
+    const nextX = clamp(event.clientX - state.stageLeft - state.pointerOffsetX, state.minX, state.maxX);
+    const nextY = clamp(event.clientY - state.stageTop - state.pointerOffsetY, state.minY, state.floorY);
     const deltaX = nextX - state.x;
     const deltaY = nextY - state.y;
 
@@ -204,8 +210,8 @@ export const initializeHomeSystems = () => {
         }
       }
 
-      if (state.x < 0) {
-        state.x = 0;
+      if (state.x < state.minX) {
+        state.x = state.minX;
         state.vx *= -0.3;
       } else if (state.x > state.maxX) {
         state.x = state.maxX;
@@ -244,6 +250,8 @@ export const initializeHomeSystems = () => {
       height: 0,
       isDragging: false,
       maxX: 0,
+      minX: 0,
+      minY: 0,
       pointerId: null,
       pointerOffsetX: 0,
       pointerOffsetY: 0,

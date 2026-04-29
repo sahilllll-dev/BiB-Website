@@ -2,6 +2,7 @@ import { loadHeader, initializeHeader } from "./components/header.js";
 import { initializeHomeConviction } from "./components/home-conviction.js";
 import { loadFooter, initializeFooter } from "./components/footer.js";
 import { initializeHomeHero } from "./components/home-hero.js";
+import { initializeHomeMomentum } from "./components/home-momentum.js";
 import { initializeHomeReallyStack } from "./components/home-really-stack.js";
 import { initializeHomeSystems } from "./components/home-systems.js";
 import { getSiteRoot } from "./utils/site.js";
@@ -18,6 +19,7 @@ const initializeApplication = async () => {
   initializeHeader();
   initializeFooter();
   initializeHomeHero(siteRoot);
+  initializeHomeMomentum();
   initializeHomeConviction();
   initializeHomeReallyStack();
   initializeHomeSystems();
