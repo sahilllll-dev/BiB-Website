@@ -44,14 +44,28 @@ class HomeHeroSequence {
     this.animationFrameId = 0;
     this.needsRedraw = true;
     this.hasStartedBackgroundPreload = false;
+    this.resolveReady = null;
+    this.readyPromise = new Promise((resolve) => {
+      this.resolveReady = resolve;
+    });
 
     this.handleScroll = this.handleScroll.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.renderLoop = this.renderLoop.bind(this);
   }
 
+  markReady() {
+    if (!this.resolveReady) {
+      return;
+    }
+
+    this.resolveReady();
+    this.resolveReady = null;
+  }
+
   initialize() {
     if (!this.stage || !this.canvas || !this.context || this.frameCount <= 0) {
+      this.markReady();
       return;
     }
 
@@ -168,6 +182,7 @@ class HomeHeroSequence {
           if (index === 0) {
             this.root.classList.add("is-loaded");
             this.preloadRemainingFrames();
+            this.markReady();
           }
 
           resolve(image);
@@ -183,6 +198,9 @@ class HomeHeroSequence {
 
       image.onerror = () => {
         console.warn(`BiB hero frame failed to load: ${imageUrl}`);
+        if (index === 0) {
+          this.markReady();
+        }
         resolve(null);
       };
 
@@ -312,9 +330,10 @@ export const initializeHomeHero = (siteRoot) => {
   const homeHero = document.querySelector("[data-home-hero]");
 
   if (!homeHero) {
-    return;
+    return Promise.resolve();
   }
 
   const sequence = new HomeHeroSequence(homeHero, siteRoot);
   sequence.initialize();
+  return sequence.readyPromise;
 };

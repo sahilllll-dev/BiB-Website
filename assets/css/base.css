@@ -95,7 +95,13 @@
     @apply list-none p-0;
   }
 
+  ::-moz-selection {
+    background: #DCF166;
+    color: #000000;
+  }
+
   ::selection {
-    background: rgba(14, 109, 102, 0.18);
+    background: #DCF166;
+    color: #000000;
   }
 }

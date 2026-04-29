@@ -9,12 +9,38 @@
       content="BiB helps ambitious companies evolve into premium brands through strategy, narrative, PR, and digital presence."
     />
     <meta name="robots" content="index, follow" />
-    <script src="../assets/js/head.js?v=20260429"></script>
-    <link rel="stylesheet" href="../assets/css/styles.css?v=20260429" />
-    <script type="module" src="../assets/js/main.js?v=20260429" defer></script>
+    <script src="../assets/js/head.js?v=20260430"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260430" />
+    <script type="module" src="../assets/js/main.js?v=20260430" defer></script>
   </head>
-  <body class="page-home">
+  <body class="page-home" data-ui="loading">
     <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <div class="site-loader" data-site-loader aria-hidden="true">
+      <div class="site-loader-center">
+        <img
+          class="site-loader-logo"
+          src="../assets/images/BiB logo - white.svg"
+          alt=""
+          width="330"
+          height="35"
+          decoding="async"
+        />
+      </div>
+
+      <div class="site-loader-footer">
+        <div class="site-loader-quote-wrap">
+          <span class="site-loader-label">Signal Log</span>
+          <p class="site-loader-quote" data-loader-quote>Aligning narrative vectors.</p>
+        </div>
+
+        <p class="site-loader-progress-count" data-loader-progress-text>000%</p>
+      </div>
+
+      <div class="site-loader-progress" aria-hidden="true">
+        <span class="site-loader-progress-bar" data-loader-progress-bar></span>
+      </div>
+    </div>
 
     <div class="site-shell">
       <div data-component="header"></div>
@@ -48,8 +74,9 @@
                 </div>
 
                 <div class="home-hero-scroll-cue" aria-hidden="true">
-                  <span class="home-hero-scroll-label">Scroll</span>
-                  <span class="home-hero-scroll-line"></span>
+                  <span class="home-hero-scroll-mouse">
+                    <span class="home-hero-scroll-dot"></span>
+                  </span>
                 </div>
               </div>
             </div>

@@ -5,6 +5,12 @@ const CURVE_VIEWBOX_WIDTH = 1200;
 const CURVE_VIEWBOX_HEIGHT = 540;
 const CONNECTOR_OVERLAP = 2;
 const MIN_CONNECTOR_HEIGHT = 18;
+const MOMENTUM_START_RATIO = 0.98;
+const MOMENTUM_END_SECTION_MULTIPLIER = 0.08;
+const REVEAL_PROGRESS_OFFSET = 0.14;
+const REVEAL_PROGRESS_SPAN = 0.72;
+const CURVE_PROGRESS_OFFSET = 0.04;
+const CURVE_PROGRESS_SPAN = 0.92;
 
 export const initializeHomeMomentum = () => {
   const section = document.querySelector("[data-home-momentum]");
@@ -119,12 +125,14 @@ export const initializeHomeMomentum = () => {
 
     const rect = section.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
-    const start = viewportHeight * 0.98;
-    const end = -rect.height * 0.06;
-    const progress = clamp((start - rect.top) / (start - end), 0, 1);
+    const start = viewportHeight * MOMENTUM_START_RATIO;
+    const end = -rect.height * MOMENTUM_END_SECTION_MULTIPLIER;
+    const rawProgress = clamp((start - rect.top) / (start - end), 0, 1);
+    const progress = clamp((rawProgress - REVEAL_PROGRESS_OFFSET) / REVEAL_PROGRESS_SPAN, 0, 1);
+    const curveProgress = clamp((progress - CURVE_PROGRESS_OFFSET) / CURVE_PROGRESS_SPAN, 0, 1);
 
     section.style.setProperty("--momentum-progress", progress.toFixed(4));
-    curve.style.strokeDashoffset = `${curveLength * (1 - progress)}`;
+    curve.style.strokeDashoffset = `${curveLength * (1 - curveProgress)}`;
 
     cards.forEach((card) => {
       const appearStart = Number(card.dataset.appearStart || 0);

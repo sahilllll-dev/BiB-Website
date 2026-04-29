@@ -2,6 +2,9 @@
   const html = document.documentElement;
   const head = document.head;
 
+  html.classList.remove("no-js");
+  html.classList.add("js");
+
   const normalizeRoot = (value) => String(value || ".").replace(/\/$/, "");
 
   const resolveRoute = (siteRoot, route = "") => {

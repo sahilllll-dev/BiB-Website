@@ -1,6 +1,9 @@
 import { applyRoutes, fetchComponentMarkup, normalizePath } from "../utils/site.js";
 
 const ACTIVE_CLASS = "is-active";
+const DESKTOP_HEADER_MEDIA = "(min-width: 768px)";
+const HEADER_HIDE_SCROLL_START = 24;
+const HEADER_SHOW_DELTA = 8;
 
 const setHeaderLayoutMode = (header) => {
   const pageMain = document.querySelector("#main-content");
@@ -37,6 +40,10 @@ const bindMobileNavigation = (header) => {
     return;
   }
 
+  if (mobilePanel.parentElement !== document.body) {
+    document.body.appendChild(mobilePanel);
+  }
+
   const setHeaderMenuState = (isOpen) => {
     header.classList.toggle("menu-is-open", isOpen);
     document.body.classList.toggle("menu-open", isOpen);
@@ -54,6 +61,7 @@ const bindMobileNavigation = (header) => {
   const openPanel = () => {
     setMenuOrigin();
     toggleButton.setAttribute("aria-expanded", "true");
+    header.classList.remove("site-header--hidden");
     setHeaderMenuState(true);
     mobilePanel.hidden = false;
 
@@ -71,7 +79,7 @@ const bindMobileNavigation = (header) => {
   };
 
   const handleDocumentClick = (event) => {
-    if (!header.contains(event.target)) {
+    if (!header.contains(event.target) && !mobilePanel.contains(event.target)) {
       closePanel();
     }
   };
@@ -115,6 +123,71 @@ const bindMobileNavigation = (header) => {
   setMenuOrigin();
 };
 
+const bindDesktopStickyHeader = (header) => {
+  const desktopMedia = window.matchMedia(DESKTOP_HEADER_MEDIA);
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  const showHeader = () => {
+    header.classList.remove("site-header--hidden");
+  };
+
+  const applyDesktopMode = () => {
+    const isDesktop = desktopMedia.matches;
+
+    header.classList.toggle("site-header--sticky-enabled", isDesktop);
+
+    if (!isDesktop) {
+      showHeader();
+    }
+
+    lastScrollY = window.scrollY;
+  };
+
+  const updateOnScroll = () => {
+    ticking = false;
+
+    if (!desktopMedia.matches || header.classList.contains("menu-is-open")) {
+      showHeader();
+      lastScrollY = window.scrollY;
+      return;
+    }
+
+    const currentScrollY = window.scrollY;
+    const delta = currentScrollY - lastScrollY;
+
+    if (currentScrollY <= 0) {
+      showHeader();
+    } else if (delta > 0 && currentScrollY > HEADER_HIDE_SCROLL_START) {
+      header.classList.add("site-header--hidden");
+    } else if (delta <= -HEADER_SHOW_DELTA) {
+      showHeader();
+    }
+
+    lastScrollY = currentScrollY;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    window.requestAnimationFrame(updateOnScroll);
+  };
+
+  applyDesktopMode();
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", applyDesktopMode, { passive: true });
+
+  if (typeof desktopMedia.addEventListener === "function") {
+    desktopMedia.addEventListener("change", applyDesktopMode);
+  } else if (typeof desktopMedia.addListener === "function") {
+    desktopMedia.addListener(applyDesktopMode);
+  }
+};
+
 export const loadHeader = async (siteRoot) => {
   const slot = document.querySelector('[data-component="header"]');
 
@@ -136,4 +209,5 @@ export const initializeHeader = () => {
   setHeaderLayoutMode(header);
   setActiveNavigation(header);
   bindMobileNavigation(header);
+  bindDesktopStickyHeader(header);
 };
