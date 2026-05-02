@@ -45,7 +45,9 @@ export const initializeHomeSystems = () => {
   const states = new Map();
   let stageWidth = 0;
   let stageHeight = 0;
+  let stageLeft = 0;
   let floorOffset = 0;
+  let viewportWidth = 0;
   let animationFrameId = 0;
   let activePointerState = null;
   let zCounter = 20;
@@ -65,8 +67,12 @@ export const initializeHomeSystems = () => {
   const updateMetrics = ({ preservePosition = true } = {}) => {
     const breakpoint = getBreakpoint();
     const interactive = isInteractiveViewport();
+    const stageRect = stage.getBoundingClientRect();
+
     stageWidth = stage.clientWidth;
     stageHeight = stage.clientHeight;
+    stageLeft = stageRect.left;
+    viewportWidth = document.documentElement.clientWidth || window.innerWidth;
     floorOffset =
       parseFloat(window.getComputedStyle(stage).getPropertyValue("--systems-floor-offset").trim() || "0") || 0;
 
@@ -87,10 +93,9 @@ export const initializeHomeSystems = () => {
       const state = states.get(card);
       const width = card.offsetWidth;
       const height = card.offsetHeight;
-      const spillX = width * 0.9;
       const spillY = height * 0.9;
-      const minX = -spillX;
-      const maxX = Math.max(minX, stageWidth - width + spillX);
+      const minX = -stageLeft;
+      const maxX = Math.max(minX, viewportWidth - stageLeft - width);
       const minY = -spillY;
       const floorY = Math.max(0, stageHeight - floorOffset - height);
       const initialXPct = readResponsiveX(card, breakpoint);
@@ -282,7 +287,7 @@ export const initializeHomeSystems = () => {
 
       state.isDragging = true;
       state.pointerId = event.pointerId;
-      state.stageLeft = stage.getBoundingClientRect().left;
+      state.stageLeft = stageLeft;
       state.stageTop = stage.getBoundingClientRect().top;
       state.pointerOffsetX = event.clientX - state.stageLeft - state.x;
       state.pointerOffsetY = event.clientY - state.stageTop - state.y;

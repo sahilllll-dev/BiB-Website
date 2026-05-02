@@ -1,10 +1,12 @@
 import { loadHeader, initializeHeader } from "./components/header.js";
 import { initializeHomeConviction } from "./components/home-conviction.js";
+import { initializeHomeCaseStudies } from "./components/home-case-studies.js";
 import { loadFooter, initializeFooter } from "./components/footer.js";
 import { initializeHomeHero } from "./components/home-hero.js";
 import { initializeHomeMomentum } from "./components/home-momentum.js";
 import { initializeHomeReallyStack } from "./components/home-really-stack.js";
 import { initializeHomeSystems } from "./components/home-systems.js";
+import { initializeHomeWhatWeDo } from "./components/home-what-we-do.js";
 import { createSiteLoader } from "./components/site-loader.js";
 import { getSiteRoot } from "./utils/site.js";
 
@@ -35,8 +37,10 @@ const initializeApplication = async () => {
     heroReadyPromise = initializeHomeHero(siteRoot);
     initializeHomeMomentum();
     initializeHomeConviction();
+    initializeHomeCaseStudies();
     initializeHomeReallyStack();
     initializeHomeSystems();
+    initializeHomeWhatWeDo(siteRoot);
     siteLoader.markBootstrapped();
 
     await Promise.all([heroReadyPromise, waitForWindowLoad()]);
