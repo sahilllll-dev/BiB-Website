@@ -27,7 +27,7 @@ export const resolveRoute = (siteRoot, route = "") => {
 
 export const normalizePath = (value) => {
   const url = new URL(value, window.location.origin);
-  const normalized = url.pathname.replace(/\/+$/, "");
+  const normalized = url.pathname.replace(/\/index\.html$/, "").replace(/\/+$/, "");
   return normalized || "/";
 };
 
