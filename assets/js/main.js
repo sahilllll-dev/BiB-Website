@@ -1,6 +1,6 @@
 import { loadHeader, initializeHeader } from "./components/header.js";
 import { initializeHomeConviction } from "./components/home-conviction.js";
-import { initializeHomeCaseStudies } from "./components/home-case-studies.js";
+import { initializeHomeCaseStudies } from "./components/home-case-studies.js?v=20260506";
 import { loadFooter, initializeFooter } from "./components/footer.js";
 import { initializeHomeHero } from "./components/home-hero.js";
 import { initializeHomeMomentum } from "./components/home-momentum.js";
