@@ -227,18 +227,16 @@
   }
 
   const registerGlobalHeadTags = () => {
-    // Add sitewide analytics, pixels, or verification tags here once.
-    // Example:
-    // upsertScript("ga-loader", {
-    //   async: true,
-    //   src: "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-    // });
-    //
-    // upsertScript(
-    //   "ga-config",
-    //   {},
-    //   "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');"
-    // );
+    upsertScript("ga-loader", {
+      async: true,
+      src: "https://www.googletagmanager.com/gtag/js?id=G-LKCWRZ2T9Y"
+    });
+
+    upsertScript(
+      "ga-config",
+      {},
+      "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-LKCWRZ2T9Y');"
+    );
   };
 
   registerGlobalHeadTags();
