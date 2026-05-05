@@ -227,16 +227,7 @@
   }
 
   const registerGlobalHeadTags = () => {
-    upsertScript("ga-loader", {
-      async: true,
-      src: "https://www.googletagmanager.com/gtag/js?id=G-LKCWRZ2T9Y"
-    });
-
-    upsertScript(
-      "ga-config",
-      {},
-      "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-LKCWRZ2T9Y');"
-    );
+    // Add sitewide verification or integration tags here if they do not need to appear in page source.
   };
 
   registerGlobalHeadTags();
