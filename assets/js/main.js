@@ -37,7 +37,7 @@ const initializeApplication = async () => {
     heroReadyPromise = initializeHomeHero(siteRoot);
     initializeHomeMomentum();
     initializeHomeConviction();
-    initializeHomeCaseStudies();
+    initializeHomeCaseStudies(siteRoot);
     initializeHomeReallyStack();
     initializeHomeSystems();
     initializeHomeWhatWeDo(siteRoot);
