@@ -1,4 +1,5 @@
 import { loadHeader, initializeHeader } from "./components/header.js";
+import { initializeContactOverlay } from "./components/contact-overlay.js";
 import { initializeHomeConviction } from "./components/home-conviction.js";
 import { initializeHomeCaseStudies } from "./components/home-case-studies.js?v=20260506";
 import { loadFooter, initializeFooter } from "./components/footer.js";
@@ -34,6 +35,7 @@ const initializeApplication = async () => {
 
     initializeHeader();
     initializeFooter();
+    initializeContactOverlay(siteRoot);
     heroReadyPromise = initializeHomeHero(siteRoot);
     initializeHomeMomentum();
     initializeHomeConviction();
