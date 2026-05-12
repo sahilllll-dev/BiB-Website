@@ -42,20 +42,32 @@ const createContactPanel = () => {
 
       <div class="contact-panel-grid">
         <section class="contact-panel-intro" aria-label="Contact introduction">
-          <p class="contact-panel-kicker">One conversation is enough to start.</p>
-          <h2 class="contact-panel-title" id="contact-panel-title">Tell us what's not working.</h2>
-          <p class="contact-panel-subline">
-            We don't need a brief. We need a conversation. One email is enough to start.
-          </p>
-
+          <div class="contact-panel-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="contact-panel-intro-copy">
+            <p class="contact-panel-kicker">One conversation is enough to start.</p>
+            <p class="contact-panel-aside-text">
+              We don't need a brief. We need a conversation. One email is enough to start.
+            </p>
+            <a class="contact-panel-email" href="mailto:hello@busynessintobrands.com">hello@busynessintobrands.com</a>
+          </div>
           <div class="contact-panel-proof" aria-label="What to expect">
             <span>No decks.</span>
             <span>No RFPs.</span>
-            <span>Just the real problem.</span>
+            <span>Just a straight conversation.</span>
           </div>
         </section>
 
         <form class="contact-form" data-contact-form novalidate>
+          <div class="contact-form-head">
+            <h2 class="contact-panel-title" id="contact-panel-title">Tell us what's not working.</h2>
+            <p class="contact-panel-subline">
+              We don't need a brief. We need a conversation. One email is enough to start.
+            </p>
+          </div>
+
           <div class="contact-form-grid">
             <label class="contact-field">
               <span class="contact-label-row contact-label-row--required">Name</span>
@@ -107,7 +119,7 @@ const createContactPanel = () => {
           </div>
 
           <div class="contact-form-footer">
-            <p data-contact-status>No decks. No RFPs. Just a straight conversation about your brand.</p>
+            <p data-contact-status aria-live="polite"></p>
             <button class="contact-submit" type="submit">Let's talk.</button>
           </div>
         </form>
@@ -241,6 +253,20 @@ export const initializeContactOverlay = (siteRoot = ".") => {
     submitButton.textContent = isSubmitting ? "Sending..." : "Let's talk.";
   };
 
+  const playSubmitErrorAnimation = () => {
+    if (!form) {
+      return;
+    }
+
+    form.classList.remove("has-submit-error");
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        form.classList.add("has-submit-error");
+      });
+    });
+  };
+
   document.addEventListener("click", (event) => {
     const trigger = event.target.closest?.("a, button, [data-contact-trigger]");
 
@@ -275,10 +301,12 @@ export const initializeContactOverlay = (siteRoot = ".") => {
     event.preventDefault();
 
     if (!form.checkValidity()) {
+      playSubmitErrorAnimation();
       form.reportValidity();
       return;
     }
 
+    form.classList.remove("has-submit-error");
     setSubmitting(true);
     setStatus("Sending your query...", "pending");
 
@@ -301,9 +329,16 @@ export const initializeContactOverlay = (siteRoot = ".") => {
       setStatus(defaultStatusText, "idle");
       closePanel();
     } catch (error) {
+      playSubmitErrorAnimation();
       setStatus(error.message || "Something went wrong. Please try again.", "error");
     } finally {
       setSubmitting(false);
+    }
+  });
+
+  form?.addEventListener("animationend", (event) => {
+    if (event.animationName === "contactFormSubmitError" || event.animationName === "contactFormSubmitErrorReduced") {
+      form.classList.remove("has-submit-error");
     }
   });
 
