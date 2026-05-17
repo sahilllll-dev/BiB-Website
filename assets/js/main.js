@@ -8,6 +8,8 @@ import { initializeHomeMomentum } from "./components/home-momentum.js";
 import { initializeHomeReallyStack } from "./components/home-really-stack.js";
 import { initializeHomeSystems } from "./components/home-systems.js";
 import { initializeHomeWhatWeDo } from "./components/home-what-we-do.js";
+import { initializePrCompound } from "./components/pr-compound.js";
+import { initializePrLaunchStack } from "./components/pr-launch-stack.js";
 import { createSiteLoader } from "./components/site-loader.js";
 import { getSiteRoot } from "./utils/site.js";
 
@@ -43,6 +45,8 @@ const initializeApplication = async () => {
     initializeHomeReallyStack();
     initializeHomeSystems();
     initializeHomeWhatWeDo(siteRoot);
+    initializePrCompound();
+    initializePrLaunchStack();
     siteLoader.markBootstrapped();
 
     await Promise.all([heroReadyPromise, waitForWindowLoad()]);

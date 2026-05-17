@@ -4,6 +4,9 @@ const ACTIVE_CLASS = "is-active";
 const DESKTOP_HEADER_MEDIA = "(min-width: 768px)";
 const HEADER_HIDE_SCROLL_START = 24;
 const HEADER_SHOW_DELTA = 8;
+const HEADER_SURFACE_LIGHT_CLASS = "site-header--over-light";
+const HEADER_SURFACE_DARK_CLASS = "site-header--over-dark";
+const HEADER_THEME_SELECTOR = "[data-header-theme]";
 
 const setHeaderLayoutMode = (header) => {
   const pageMain = document.querySelector("#main-content");
@@ -188,6 +191,43 @@ const bindDesktopStickyHeader = (header) => {
   }
 };
 
+const bindAdaptiveHeaderTheme = (header) => {
+  const themedSections = Array.from(document.querySelectorAll(HEADER_THEME_SELECTOR));
+
+  if (!header.classList.contains("site-header--overlay") || themedSections.length === 0) {
+    return;
+  }
+
+  let ticking = false;
+
+  const applyTheme = () => {
+    ticking = false;
+
+    const probeY = Math.min(window.innerHeight - 1, Math.max(1, header.offsetHeight + 12));
+    const activeSection = themedSections.find((section) => {
+      const rect = section.getBoundingClientRect();
+      return rect.top <= probeY && rect.bottom > probeY;
+    });
+    const isOverLightSurface = activeSection?.dataset.headerTheme === "light";
+
+    header.classList.toggle(HEADER_SURFACE_LIGHT_CLASS, isOverLightSurface);
+    header.classList.toggle(HEADER_SURFACE_DARK_CLASS, !isOverLightSurface);
+  };
+
+  const requestThemeUpdate = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    window.requestAnimationFrame(applyTheme);
+  };
+
+  window.addEventListener("scroll", requestThemeUpdate, { passive: true });
+  window.addEventListener("resize", requestThemeUpdate, { passive: true });
+  applyTheme();
+};
+
 export const loadHeader = async (siteRoot) => {
   const slot = document.querySelector('[data-component="header"]');
 
@@ -210,4 +250,5 @@ export const initializeHeader = () => {
   setActiveNavigation(header);
   bindMobileNavigation(header);
   bindDesktopStickyHeader(header);
+  bindAdaptiveHeaderTheme(header);
 };
