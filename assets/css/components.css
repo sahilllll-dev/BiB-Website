@@ -8126,4 +8126,1038 @@
       --home-hero-scroll-length: 240vh;
     }
   }
+
+  /* ================================================================
+     PORTFOLIO HSCROLL — Horizontal pinned storytelling section
+  ================================================================ */
+
+  .portfolio-hscroll {
+    position: relative;
+    /* Height is set in JS: vh + (N-1)*vw — ensures the sticky releases only after
+       the last panel is fully aligned. Static 300vh is wrong on wide screens
+       because vw > vh, causing early unpin before translation completes. */
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .portfolio-hscroll-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .portfolio-hscroll-track {
+    display: flex;
+    width: calc(3 * 100vw);
+    height: 100%;
+    will-change: transform;
+  }
+
+  /* Individual panels --------------------------------- */
+
+  .hscroll-panel {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    width: 100vw;
+    height: 100%;
+    overflow: hidden;
+    background: #000000;
+  }
+
+  .hscroll-panel-left {
+    flex: 0 0 50%;
+    display: flex;
+    align-items: center;
+    padding: clamp(4rem, 8vh, 6rem) clamp(2.5rem, 5vw, 5rem) clamp(4rem, 8vh, 6rem) clamp(4rem, 8vw, 9rem);
+    position: relative;
+    z-index: 1;
+  }
+
+  .hscroll-panel-right {
+    flex: 0 0 50%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hscroll-panel-right img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    user-select: none;
+  }
+
+  /* Subtle left-to-image gradient blend */
+  .hscroll-panel-right::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 12%;
+    background: linear-gradient(to right, #000000, transparent);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Panel copy wrapper + description paragraph */
+
+  .hscroll-panel-copy {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 2.8vh, 2rem);
+  }
+
+  .hscroll-panel-desc {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.1rem, 2.22vw, 2rem); /* 32px at 1440px */
+    font-weight: 300;
+    line-height: 1.372; /* 43.9 / 32 */
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0;
+  }
+
+  /* Narrative arrow rows ----------------------------- */
+
+  .hscroll-narrative {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.4rem, 3.5vh, 2.2rem);
+  }
+
+  .hscroll-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.65rem, 1.2vw, 1.1rem);
+    flex-wrap: nowrap;
+  }
+
+  .hscroll-statement {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(0.95rem, 1.4vw, 1.45rem);
+    font-weight: 300;
+    letter-spacing: 0.005em;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+  }
+
+  .hscroll-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: clamp(2rem, 2.4vw, 2.6rem);
+    height: clamp(2rem, 2.4vw, 2.6rem);
+    border-radius: 50%;
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .hscroll-pill svg {
+    display: block;
+  }
+
+  /* Panel 2 — transition copy ------------------------ */
+
+  .hscroll-transition-copy {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hscroll-transition-title {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2rem, 3.2vw, 4.75rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .hscroll-transition-sub {
+    margin-top: clamp(0.9rem, 2vh, 1.5rem);
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(0.9rem, 1.15vw, 1.3rem);
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  /* Responsive — stack vertically below 1024px ------- */
+
+  @media (max-width: 1023px) {
+    .portfolio-hscroll {
+      height: auto;
+    }
+
+    .portfolio-hscroll-sticky {
+      position: relative;
+      height: auto;
+      overflow: visible;
+    }
+
+    .portfolio-hscroll-track {
+      flex-direction: column;
+      width: 100%;
+      transform: none !important;
+    }
+
+    .hscroll-panel {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      min-height: 100svh;
+      min-height: 100vh;
+    }
+
+    .hscroll-panel-left {
+      flex: none;
+      width: 100%;
+      padding: clamp(3.5rem, 8vh, 5rem) clamp(1.5rem, 5vw, 3.5rem);
+    }
+
+    .hscroll-panel-desc {
+      font-size: clamp(1.1rem, 3vw, 1.5rem); /* ~22px at 768px */
+      line-height: 1.45;
+    }
+
+    .hscroll-panel-right {
+      flex: none;
+      width: 100%;
+      height: clamp(260px, 55vw, 460px);
+    }
+
+    .hscroll-panel-right img {
+      position: absolute;
+    }
+
+    .hscroll-panel-right::before {
+      width: 0;
+      background: none;
+    }
+
+    .hscroll-row {
+      flex-wrap: wrap;
+    }
+
+    .hscroll-statement {
+      font-size: clamp(0.9rem, 3.8vw, 1.2rem);
+      white-space: normal;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .hscroll-pill {
+      width: 1.9rem;
+      height: 1.9rem;
+    }
+
+    .hscroll-transition-title {
+      font-size: clamp(1.8rem, 7vw, 2.8rem);
+    }
+
+    .hscroll-panel-desc {
+      font-size: clamp(0.95rem, 4.5vw, 1.15rem); /* 16–18px on small phones */
+      line-height: 1.55;
+    }
+  }
+
+  /* ================================================================
+     PORTFOLIO EXECUTION — "The Execution" bento card grid
+  ================================================================ */
+
+  .portfolio-execution {
+    position: relative;
+    background: #000000;
+    color: #ffffff;
+    padding: clamp(5rem, 10vh, 8rem) 0 clamp(6rem, 12vh, 9rem);
+  }
+
+  .execution-inner {
+    width: min(90vw, 1320px);
+    margin-inline: auto;
+  }
+
+  /* Section heading */
+  .execution-header {
+    text-align: center;
+    margin-bottom: clamp(3rem, 6vh, 5rem);
+  }
+
+  .execution-title {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.25rem, 4.2vw, 5.25rem);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .execution-title strong {
+    font-weight: 800;
+  }
+
+  /* Bento grid — 4-column base for 25/75 and 50/50 splits */
+  .execution-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto;
+    gap: clamp(0.85rem, 1.2vw, 1.25rem);
+  }
+
+  /* Row 1: 25% | 75% */
+  .execution-card:nth-child(1) { grid-column: 1 / 2; }
+  .execution-card:nth-child(2) { grid-column: 2 / 5; }
+  /* Row 2: 50% | 50% */
+  .execution-card:nth-child(3) { grid-column: 1 / 3; }
+  .execution-card:nth-child(4) { grid-column: 3 / 5; }
+
+  /* Base card — layout only; backgrounds set per modifier */
+  .execution-card {
+    position: relative;
+    min-height: clamp(260px, 28vw, 385px);
+    padding: clamp(1.6rem, 2.5vw, 2.25rem);
+    border-radius: clamp(0.9rem, 1.2vw, 1.25rem);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: #010101;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Shared inset top-edge highlight */
+  .execution-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 30%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Card text body */
+  .execution-card-body {
+    position: relative;
+    z-index: 2;
+  }
+
+  .execution-card-title {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.05rem, 1.65vw, 1.9rem);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    margin: 0 0 clamp(0.4rem, 0.8vh, 0.65rem);
+  }
+
+  .execution-card-title strong {
+    font-weight: 800;
+  }
+
+  /* PR placements: larger, more dominant title */
+  .execution-card-title--pr {
+    font-size: clamp(1.5rem, 2.8vw, 3.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .execution-card-title--pr strong {
+    font-weight: 800;
+  }
+
+  .execution-card-copy {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(0.76rem, 0.88vw, 0.94rem);
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.44);
+    margin: 0;
+  }
+
+  /* Card 01 — Social creatives
+     Gradient border via padding-box/border-box trick (preserves border-radius) */
+  .execution-card--social {
+    justify-content: flex-end;
+    background:
+      linear-gradient(128.91deg, #010101 47.24%, #002444 99.69%) padding-box,
+      linear-gradient(97.81deg, rgba(255, 255, 255, 0.7) 3.52%, rgba(255, 255, 255, 0.21) 96.48%) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 65px 0px #57BBDE4F inset;
+  }
+
+  .execution-card--social .execution-card-visual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* Bottom ~42% reserved for text body */
+    bottom: 42%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .execution-card--social .execution-card-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  /* Card 02 — PR placements */
+  .execution-card--pr {
+    justify-content: center;
+    align-items: center;
+    background:
+      linear-gradient(214.01deg, #010101 42.5%, rgba(0, 36, 68, 0.8) 75.56%) padding-box,
+      linear-gradient(97.81deg, rgba(255, 255, 255, 0.7) 3.52%, rgba(255, 255, 255, 0.21) 96.48%) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 65px 0px #57BBDE4F inset;
+  }
+
+  .execution-card--pr .execution-card-ghost {
+    position: absolute;
+    right: -1.5rem;
+    bottom: -1rem;
+    width: clamp(110px, 18%, 220px);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.08;
+    margin: 0;
+  }
+
+  .execution-card--pr .execution-card-ghost img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Card 03 — Website visuals */
+  .execution-card--website {
+    background:
+      linear-gradient(84.73deg, #010101 47.97%, rgba(0, 36, 68, 0.6) 86.49%) padding-box,
+      linear-gradient(97.81deg, rgba(255, 255, 255, 0.7) 3.52%, rgba(255, 255, 255, 0.21) 96.48%) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 65px 0px #57BBDE4F inset;
+  }
+
+  /* Card 04 — Campaign design */
+  .execution-card--campaign {
+    background:
+      linear-gradient(316.2deg, #010101 47.51%, rgba(0, 36, 68, 0.4) 94.79%) padding-box,
+      linear-gradient(97.81deg, rgba(255, 255, 255, 0.7) 3.52%, rgba(255, 255, 255, 0.21) 96.48%) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 65px 0px #57BBDE4F inset;
+  }
+
+  /* Cards 03 & 04 — image inset with 13px breathing room on top, right, bottom */
+  .execution-card--website .execution-card-media,
+  .execution-card--campaign .execution-card-media {
+    position: absolute;
+    right: 13px;
+    top: 13px;
+    bottom: 13px;
+    width: 52%;
+    z-index: 1;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+
+  .execution-card--website .execution-card-media img,
+  .execution-card--campaign .execution-card-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  /* Card 03 text width — prevent overlap with image */
+  .execution-card--website .execution-card-body,
+  .execution-card--campaign .execution-card-body {
+    position: relative;
+    z-index: 2;
+    max-width: 52%;
+  }
+
+  /* Responsive: tablet → 2-column equal */
+  @media (max-width: 900px) {
+    .execution-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .execution-card:nth-child(1),
+    .execution-card:nth-child(2),
+    .execution-card:nth-child(3),
+    .execution-card:nth-child(4) {
+      grid-column: auto;
+    }
+
+    .execution-card--website .execution-card-body,
+    .execution-card--campaign .execution-card-body {
+      max-width: 55%;
+    }
+  }
+
+  /* Responsive: mobile → single column */
+  @media (max-width: 560px) {
+    .execution-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .execution-card {
+      min-height: clamp(220px, 60vw, 300px);
+    }
+
+    .execution-card-title--pr {
+      font-size: clamp(1.4rem, 6vw, 2.2rem);
+    }
+
+    .execution-card--website .execution-card-body,
+    .execution-card--campaign .execution-card-body {
+      max-width: 60%;
+    }
+
+    .execution-card--website .execution-card-media,
+    .execution-card--campaign .execution-card-media {
+      width: 48%;
+    }
+  }
+
+  /* ================================================================
+     PORTFOLIO PAGE
+  ================================================================ */
+
+  .page-portfolio {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .page-portfolio::before,
+  .page-portfolio::after {
+    content: none;
+  }
+
+  .page-portfolio .site-shell,
+  .page-portfolio #main-content {
+    background: #000000;
+  }
+
+  .page-portfolio .skip-link {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .page-portfolio .site-header.site-header--overlay .header-inner {
+    color: #ffffff;
+    mix-blend-mode: normal;
+    transition: color 180ms ease;
+  }
+
+  .page-portfolio .site-header.site-header--overlay .brand-logo {
+    filter: none;
+    transition: filter 180ms ease;
+  }
+
+  .page-portfolio .site-header.site-header--overlay .header-cta,
+  .page-portfolio .site-header.site-header--overlay .mobile-menu-button {
+    color: inherit;
+    border-color: rgba(255, 255, 255, 0.18);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* ================================================================
+     PORTFOLIO HERO
+  ================================================================ */
+
+  .portfolio-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse 100% 60% at 50% -8%, rgba(0, 148, 218, 0.22), transparent),
+      radial-gradient(ellipse 55% 40% at 18% 88%, rgba(0, 60, 130, 0.10), transparent),
+      radial-gradient(ellipse 40% 30% at 82% 72%, rgba(0, 25, 75, 0.07), transparent),
+      #000000;
+    color: #ffffff;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .portfolio-hero-glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1920px;
+    height: auto;
+    opacity: 0.6;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+  }
+
+  .portfolio-hero-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .portfolio-hero-grid-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .portfolio-hero-grid-line:nth-child(1) { left: 20%; }
+  .portfolio-hero-grid-line:nth-child(2) { left: 40%; }
+  .portfolio-hero-grid-line:nth-child(3) { left: 60%; }
+  .portfolio-hero-grid-line:nth-child(4) { left: 80%; }
+
+  .portfolio-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(80vw, 1080px);
+    padding-block: clamp(5.5rem, 11vh, 9rem);
+  }
+
+  .portfolio-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .portfolio-hero-title {
+    display: block;
+    margin: 0;
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    text-transform: uppercase;
+  }
+
+  .portfolio-hero-title-row {
+    display: block;
+  }
+
+  .portfolio-hero-title-row--light {
+    font-size: clamp(1.7rem, 3vw + 0.3rem, 4.25rem);
+    font-weight: 300;
+    letter-spacing: 0.09em;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.68);
+    margin-bottom: 0.06em;
+  }
+
+  .portfolio-hero-title-row--strong {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.18em;
+    font-size: clamp(2.6rem, 5.4vw + 0.4rem, 7.75rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 0.88;
+  }
+
+  .portfolio-hero-word-strategic {
+    background: linear-gradient(
+      128deg,
+      #47c1f8 0%,
+      #7dd8fc 28%,
+      #b0e8ff 55%,
+      #ddf4ff 78%,
+      #ffffff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .portfolio-hero-word-shifts {
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+  }
+
+  .portfolio-hero-subtext {
+    margin-top: clamp(1.2rem, 2.4vh, 2rem);
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(0.82rem, 0.85vw, 1.1rem);
+    font-weight: 300;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.42);
+  }
+
+  /* Mouse-trail cards --------------------------------- */
+
+  .portfolio-trail-card {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 10;
+    transition: none;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  .portfolio-trail-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: none;
+  }
+
+  /* Scroll cue ---------------------------------------- */
+
+  .portfolio-hero-scroll-cue {
+    position: absolute;
+    bottom: clamp(1.75rem, 3.5vh, 3rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  /* Responsive ---------------------------------------- */
+
+  @media (max-width: 540px) {
+    .portfolio-hero-title-row--light {
+      font-size: clamp(1.5rem, 7vw, 2.2rem);
+    }
+
+    .portfolio-hero-title-row--strong {
+      font-size: clamp(2.2rem, 9.5vw, 3.5rem);
+    }
+
+    .portfolio-hero-subtext {
+      font-size: 0.82rem;
+    }
+
+    .portfolio-trail-card {
+      display: none;
+    }
+  }
+
+  /* ================================================================
+     PORTFOLIO OUTRO — closing statement above footer
+     Mirrors the pr-remembered / home-recall visual system exactly
+  ================================================================ */
+
+  .portfolio-outro {
+    position: relative;
+    overflow: hidden;
+    background:
+      #000000
+      center bottom / cover no-repeat url("../images/above-footer-bg.png");
+    color: #ffffff;
+  }
+
+  /* Top-to-center black fade so the glow arc reads at the bottom */
+  .portfolio-outro::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 0;
+    height: clamp(16rem, 35vh, 27rem);
+    background: linear-gradient(
+      180deg,
+      #000000 0%,
+      rgba(0, 0, 0, 0.94) 20%,
+      rgba(0, 0, 0, 0.62) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+  }
+
+  .portfolio-outro-shell {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: min(100%, 1920px);
+    min-height: clamp(36rem, 64svh, 52rem);
+    min-height: clamp(36rem, 64vh, 52rem);
+    margin-inline: auto;
+    padding: clamp(5rem, 10vh, 8rem) 1rem clamp(7rem, 14vh, 10rem);
+  }
+
+  /* Gradient text — fades from near-opaque center-bottom to ghost at edges */
+  .portfolio-outro-title {
+    max-width: min(calc(100% - 2rem), 82rem);
+    text-align: center;
+    font-size: clamp(2.15rem, 1.18rem + 2.75vw, 4.55rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.055em;
+    background: radial-gradient(
+      56% 140% at 52% 96%,
+      rgba(249, 249, 251, 0.98) 0%,
+      rgba(249, 249, 251, 0.38) 62%,
+      rgba(249, 249, 251, 0.2) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .portfolio-outro-title span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 767px) {
+    .portfolio-outro::before {
+      height: 16rem;
+    }
+
+    .portfolio-outro-shell {
+      min-height: 32rem;
+      padding: 5rem 1rem 7rem;
+    }
+
+    .portfolio-outro-title {
+      max-width: calc(100vw - 1.5rem);
+      font-size: clamp(1.34rem, 6.15vw, 2.05rem);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+    }
+
+    .portfolio-outro-title span {
+      white-space: normal;
+    }
+  }
+
+  /* ================================================================
+     PORTFOLIO IMPACT — "The Real Impact" floating image section
+  ================================================================ */
+
+  .portfolio-impact {
+    position: relative;
+    min-height: 100svh;
+    min-height: 100vh;
+    background: #000000;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Center editorial content */
+  .impact-content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: min(55vw, 700px);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .impact-title {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.5rem, 6.94vw, 6.25rem); /* 100px at 1440px */
+    font-weight: 300;
+    line-height: 1.081;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: capitalize;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .impact-title strong {
+    display: block;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .impact-copy {
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(0.9rem, 1.25vw, 1.125rem); /* 18px at 1440px */
+    font-weight: 400;
+    line-height: 1.494; /* 26.9 / 18 */
+    letter-spacing: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.70);
+    max-width: 33em;
+    margin: clamp(1.25rem, 2.5vh, 1.75rem) auto 0;
+  }
+
+  .impact-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: clamp(1.5rem, 3vh, 2.25rem);
+    padding: 0.8rem 2.1rem;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 999px;
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(0.82rem, 0.9vw, 0.95rem);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 180ms ease, transform 150ms ease;
+  }
+
+  .impact-cta:hover {
+    background: #e6e6e6;
+    transform: translateY(-1px);
+  }
+
+  /* Floating images */
+  .impact-img {
+    position: absolute;
+    margin: 0;
+    border-radius: 0.7rem;
+    overflow: hidden;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(14px);
+    will-change: opacity, transform;
+    transition: opacity 0.88s ease, transform 0.88s ease;
+  }
+
+  .impact-img.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .impact-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* Image 1 — tall portrait, top-left */
+  .impact-img--1 {
+    left: clamp(20px, 4.5vw, 72px);
+    top: clamp(80px, 14vh, 150px);
+    width: clamp(145px, 16vw, 242px);
+    aspect-ratio: 2 / 3;
+  }
+
+  /* Image 2 — small square, upper center-left */
+  .impact-img--2 {
+    left: clamp(160px, 23vw, 345px);
+    top: clamp(55px, 10vh, 105px);
+    width: clamp(80px, 8vw, 115px);
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Image 3 — landscape, top-right */
+  .impact-img--3 {
+    right: clamp(50px, 8vw, 120px);
+    top: clamp(35px, 5vh, 75px);
+    width: clamp(185px, 20vw, 288px);
+    aspect-ratio: 3 / 2;
+  }
+
+  /* Image 4 — landscape, bottom-left */
+  .impact-img--4 {
+    left: clamp(70px, 9vw, 140px);
+    bottom: clamp(50px, 7vh, 100px);
+    width: clamp(185px, 21vw, 298px);
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Image 5 — large, bottom-right, right edge intentionally cropped */
+  .impact-img--5 {
+    right: clamp(-25px, -2vw, -8px);
+    bottom: clamp(35px, 5vh, 72px);
+    width: clamp(185px, 21vw, 298px);
+    aspect-ratio: 1 / 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .impact-img {
+      transform: none;
+      transition: opacity 0.7s ease;
+    }
+  }
+
+  /* Tablet: hide small center image, tighten content */
+  @media (max-width: 1024px) {
+    .impact-content {
+      max-width: min(68vw, 680px);
+    }
+
+    .impact-img--2 {
+      display: none;
+    }
+
+    .impact-img--5 {
+      right: -3vw;
+      width: clamp(145px, 18vw, 230px);
+    }
+  }
+
+  /* Mobile: hide all images, show centered text */
+  @media (max-width: 767px) {
+    .portfolio-impact {
+      min-height: auto;
+      padding: clamp(5rem, 12vh, 7rem) 0;
+    }
+
+    .impact-img {
+      display: none;
+    }
+
+    .impact-content {
+      max-width: 88vw;
+      padding: 0 1.25rem;
+    }
+
+    .impact-title {
+      font-size: clamp(2.25rem, 10vw, 3.75rem);
+    }
+
+    .impact-copy {
+      font-size: clamp(0.875rem, 3.8vw, 1rem);
+    }
+  }
 }
