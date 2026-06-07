@@ -13,6 +13,8 @@ import { initializePortfolioHScroll } from "./components/portfolio-hscroll.js";
 import { initializePortfolioImpact } from "./components/portfolio-impact.js";
 import { initializePrCompound } from "./components/pr-compound.js";
 import { initializePrLaunchStack } from "./components/pr-launch-stack.js";
+import { initializeIndustriesHero } from "./components/industries-hero.js";
+import { initializeIndustriesStory } from "./components/industries-story.js";
 import { createSiteLoader } from "./components/site-loader.js";
 import { getSiteRoot } from "./utils/site.js";
 
@@ -53,6 +55,8 @@ const initializeApplication = async () => {
     initializePortfolioImpact();
     initializePrCompound();
     initializePrLaunchStack();
+    initializeIndustriesHero();
+    initializeIndustriesStory();
     siteLoader.markBootstrapped();
 
     await Promise.all([heroReadyPromise, waitForWindowLoad()]);

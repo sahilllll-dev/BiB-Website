@@ -301,10 +301,6 @@ class CaseStudySequence {
 const initializeCaseSequence = (section, siteRoot) => {
   const sequenceRoots = Array.from(section.querySelectorAll("[data-case-sequence]"));
 
-  if (sequenceRoots.length === 0) {
-    return;
-  }
-
   sequenceRoots.forEach((sequenceRoot) => {
     const mountSequence = () => {
       if (sequenceRoot.dataset.sequenceInitialized === "true") {
@@ -339,6 +335,31 @@ const initializeCaseSequence = (section, siteRoot) => {
     );
 
     observer.observe(sequenceRoot);
+  });
+};
+
+const initializeCaseVideos = (section) => {
+  const videos = Array.from(section.querySelectorAll("[data-case-video]"));
+
+  if (videos.length === 0 || !("IntersectionObserver" in window)) {
+    return;
+  }
+
+  videos.forEach((video) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(video);
   });
 };
 
@@ -402,4 +423,5 @@ export const initializeHomeCaseStudies = (siteRoot = ".") => {
   });
 
   initializeCaseSequence(section, siteRoot);
+  initializeCaseVideos(section);
 };

@@ -5360,7 +5360,7 @@ body[data-ui="loading"] {
     border-bottom: none;
   }
 .case-row--feature {
-    grid-template-columns: minmax(0, 65fr) minmax(0, 35fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 .case-row--trust {
     grid-template-columns: minmax(0, 20fr) minmax(0, 40fr) minmax(0, 40fr);
@@ -5595,6 +5595,13 @@ body[data-ui="loading"] {
     transform: rotate(45deg);
   }
 .case-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+.case-video {
     display: block;
     width: 100%;
     height: 100%;
@@ -8008,7 +8015,8 @@ body[data-ui="loading"] {
     position: relative;
     overflow: hidden;
   }
-.hscroll-panel-right img {
+.hscroll-panel-right img,
+.hscroll-panel-right video {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -8125,7 +8133,8 @@ body[data-ui="loading"] {
       height: clamp(260px, 55vw, 460px);
     }
 
-    .hscroll-panel-right img {
+    .hscroll-panel-right img,
+    .hscroll-panel-right video {
       position: absolute;
     }
 
@@ -8923,4 +8932,909 @@ body[data-ui="loading"] {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* ============================================================
+   INDUSTRIES — page-level header theming
+============================================================ */
+.page-industries .site-header.site-header--overlay.site-header--over-light .header-inner {
+    color: #111111;
+  }
+.page-industries .site-header.site-header--overlay.site-header--over-light .brand-logo {
+    filter: invert(1);
+  }
+.page-industries .site-header.site-header--overlay.site-header--over-dark .header-inner,
+  .page-industries .site-header.menu-is-open .header-inner {
+    color: #ffffff;
+  }
+.page-industries .site-header.site-header--overlay.site-header--over-dark .brand-logo,
+  .page-industries .site-header.menu-is-open .brand-logo {
+    filter: none;
+  }
+
+/* ============================================================
+   INDUSTRIES HERO
+============================================================ */
+.industries-hero {
+    position: relative;
+    z-index: 20;        /* sits above fixed card (z:10) — hero uncovers card as it scrolls */
+    min-height: 100svh;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(180deg, #009CC6 0%, #ffffff 100%);
+    color: #111111;
+    isolation: isolate;
+  }
+
+/* ---- Background rings ---- */
+.industries-hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+.industries-hero-ring {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    display: block;
+    height: auto;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+/* Outermost ring — BG-Circle03 */
+.industries-hero-ring--01 {
+    width: 170vw;
+    height: 170vw;
+    transform: translateX(-50%) translateY(-14.88%) scale(1.3);
+    transition:
+      opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1) 0ms,
+      transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 0ms;
+  }
+
+/* Middle ring — BG-Circle02 */
+.industries-hero-ring--02 {
+    width: 147vw;
+    height: 147vw;
+    transform: translateX(-50%) translateY(-9.5%) scale(1.3);
+    transition:
+      opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1) 80ms,
+      transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 80ms;
+  }
+
+/* Innermost ring — BG-Circle01 */
+.industries-hero-ring--03 {
+    width: 131vw;
+    height: 131vw;
+    transform: translateX(-50%) translateY(-4.57%) scale(1.3);
+    transition:
+      opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1) 160ms,
+      transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 160ms;
+  }
+
+/* Settled state */
+.industries-hero.is-active .industries-hero-ring--01 {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-14.88%) scale(1);
+  }
+.industries-hero.is-active .industries-hero-ring--02 {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-9.5%) scale(1);
+  }
+.industries-hero.is-active .industries-hero-ring--03 {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4.57%) scale(1);
+  }
+
+/* ---- Content layout ---- */
+.industries-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100svh;
+    min-height: 100vh;
+    padding: clamp(6.5rem, 11vh, 9rem) clamp(1.5rem, 7vw, 9.375rem) clamp(4rem, 8vh, 6.5rem);
+  }
+
+.industries-hero-primary {
+    max-width: 54rem;
+  }
+
+.industries-hero-secondary {
+    align-self: flex-end;
+    max-width: 34rem;
+    text-align: left;
+  }
+
+/* ---- Label ---- */
+.industries-hero-label {
+    margin: 0 0 clamp(0.9rem, 2.2vh, 1.4rem);
+    font-size: clamp(0.88rem, 0.82rem + 0.14vw, 1rem);
+    font-weight: 400;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.65);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+.industries-hero.is-active .industries-hero-label {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 600ms ease 480ms,
+      transform 820ms cubic-bezier(0.22, 1, 0.36, 1) 480ms;
+  }
+
+/* ---- Heading ---- */
+.industries-hero-title {
+    display: block;
+    margin: 0;
+    font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.6rem, 1.6rem + 3.2vw, 6.2rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: #111111;
+  }
+
+.industries-hero-title-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+.industries-hero.is-active .industries-hero-title-line:nth-child(1) {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 700ms ease 620ms,
+      transform 920ms cubic-bezier(0.22, 1, 0.36, 1) 620ms;
+  }
+
+.industries-hero.is-active .industries-hero-title-line:nth-child(2) {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 700ms ease 710ms,
+      transform 920ms cubic-bezier(0.22, 1, 0.36, 1) 710ms;
+  }
+
+/* ---- Supporting text ---- */
+.industries-hero-sub {
+    margin: 0 0 0.4rem;
+    font-size: clamp(0.92rem, 0.86rem + 0.18vw, 1.06rem);
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.62);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+.industries-hero.is-active .industries-hero-sub {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 600ms ease 860ms,
+      transform 820ms cubic-bezier(0.22, 1, 0.36, 1) 860ms;
+  }
+
+/* ---- Typed statement ---- */
+.industries-hero-statement {
+    margin: 0;
+    font-size: clamp(1.3rem, 1rem + 0.9vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #111111;
+    letter-spacing: -0.02em;
+  }
+
+.industries-hero-typed {
+    display: inline;
+  }
+
+.industries-hero-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.85em;
+    background: #111111;
+    border-radius: 1px;
+    vertical-align: text-bottom;
+    margin-left: 3px;
+    opacity: 0;
+  }
+
+.industries-hero-cursor.is-done {
+    animation: inh-cursor-out 500ms ease-in-out 3 forwards;
+  }
+
+@keyframes inh-cursor-out {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+/* ============================================================
+   INDUSTRIES HERO — Responsive
+============================================================ */
+/* Mobile small — need large vw so bottom arc stays below tall portrait viewports */
+@media (max-width: 479px) {
+    .industries-hero-bg { transform: translateY(103%) scale(2); }
+
+    .industries-hero-ring--01 { width: 380vw; }
+    .industries-hero-ring--02 { width: 330vw; }
+    .industries-hero-ring--03 { width: 300vw; }
+
+    .industries-hero-secondary {
+      align-self: flex-start;
+    }
+  }
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .industries-hero-bg { transform: translateY(103%) scale(2); }
+
+    .industries-hero-ring--01 { width: 320vw; }
+    .industries-hero-ring--02 { width: 280vw; }
+    .industries-hero-ring--03 { width: 250vw; }
+
+    .industries-hero-secondary {
+      align-self: flex-start;
+    }
+  }
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .industries-hero-ring--01 { width: 210vw; }
+    .industries-hero-ring--02 { width: 180vw; }
+    .industries-hero-ring--03 { width: 160vw; }
+  }
+
+@media (prefers-reduced-motion: reduce) {
+    .industries-hero-ring,
+    .industries-hero-label,
+    .industries-hero-title-line,
+    .industries-hero-sub {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+/* ============================================================
+   INDUSTRIES STORYTELLING — scroll-pinned glass card
+============================================================ */
+
+/* Outer section — height set by JS */
+/* ============================================================
+   INDUSTRIES STORY — stacked real sections
+   Each industry is a 100vh panel. The fixed glass card sits
+   above them all; panels scroll naturally underneath it.
+============================================================ */
+
+.industries-story {
+  position: relative;
+}
+
+/* One full-viewport section per industry.
+   position:sticky keeps each section pinned at top:0 while
+   the next section scrolls up from below and covers it.
+   z-index order ensures later scenes paint over earlier ones.
+   All scene z-indices stay below the fixed card (z:10). */
+.story-scene-wrap {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.story-scene-wrap[data-scene-index="0"] { z-index: 1; }
+.story-scene-wrap[data-scene-index="1"] { z-index: 2; }
+.story-scene-wrap[data-scene-index="2"] { z-index: 3; }
+.story-scene-wrap[data-scene-index="3"] { z-index: 4; }
+.story-scene-wrap[data-scene-index="4"] { z-index: 5; }
+.story-scene-wrap[data-scene-index="5"] { z-index: 6; }
+.story-scene-wrap[data-scene-index="6"] { z-index: 7; }
+
+/* Exit buffer — extends the containing block so scene 6 has a full
+   100vh of sticky range before the closing section appears.
+   Uses the same background as scene 6 for a seamless transition. */
+.story-scene-exit {
+  height: 100svh;
+  height: 100vh;
+  background-image:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.52) 100%),
+    url('../images/industries/Fashion%20%3A%20Lifestyle.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ---- Per-scene background images ---- */
+/* Path is relative to assets/css/styles.css → assets/images/... */
+.story-scene-wrap[data-scene-index="0"] {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%),
+    url('../images/industries/Food%20%3A%20FMCG%20%3A%20Retail.png');
+}
+.story-scene-wrap[data-scene-index="1"] {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%),
+    url('../images/industries/Real%20Estate.png');
+}
+.story-scene-wrap[data-scene-index="2"] {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%),
+    url('../images/industries/Manufacturing%20%3A%20Infrastructure.png');
+}
+.story-scene-wrap[data-scene-index="3"] {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%),
+    url('../images/industries/Political%20%3A%20Public%20Figures.png');
+}
+.story-scene-wrap[data-scene-index="4"] {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%),
+    url('../images/industries/D2C%20%3A%20E-commerce.png');
+}
+.story-scene-wrap[data-scene-index="5"] {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%),
+    url('../images/industries/Hospitality%20%3A%20Travel.png');
+}
+.story-scene-wrap[data-scene-index="6"] {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%),
+    url('../images/industries/Fashion%20%3A%20Lifestyle.png');
+}
+
+/* ============================================================
+   FIXED CARD HOST — body-level fixture
+   Starts hidden (scale 0.7, opacity 0) beneath the hero.
+   .is-revealed → animates in as hero scrolls away.
+   .is-past     → fades out after story section exits viewport.
+============================================================ */
+
+.story-fixed-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* After story section fully exits — inline styles are cleared before this fires */
+.story-fixed-card.is-past {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.story-card {
+  position: relative;
+  width: 546px;
+  height: 600px;
+  padding: 50px;
+  border-radius: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: auto;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.80);
+}
+
+.story-card::before,
+.story-card::after { content: none; }
+
+/* ============================================================
+   CARD CONTENT — slides
+============================================================ */
+
+.story-slides {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+}
+
+.story-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity  500ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.story-slide.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.story-slide-upper {
+  display: flex;
+  flex-direction: column;
+}
+
+.story-card-title {
+  font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 24px;
+}
+
+.story-card-copy {
+  font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.76);
+  margin: 0;
+}
+
+.story-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.story-tag {
+  font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.84);
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   DOT NAVIGATION — body-level fixed, right side
+   Hidden until story section enters viewport (.is-visible).
+   Tooltip appears on hover via ::before pseudo.
+============================================================ */
+
+.story-nav {
+  position: fixed;
+  right: 36px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 400ms ease, visibility 400ms ease;
+}
+
+.story-nav.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.story-nav-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  padding: 8px;
+  box-sizing: content-box;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.32);
+  background-clip: content-box;
+  cursor: pointer;
+  transition:
+    background  300ms ease,
+    transform   400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow  300ms ease;
+}
+
+/* Tooltip label — left side, fade+blur in on hover */
+.story-nav-dot::before {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(8, 8, 10, 0.80);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.90);
+  font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(5px);
+  transition: opacity 220ms ease, filter 220ms ease;
+}
+
+.story-nav-dot:hover::before,
+.story-nav-dot:focus-visible::before {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.story-nav-dot.is-active {
+  background: rgba(255, 255, 255, 0.96);
+  background-clip: content-box;
+  transform: scale(1.85);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.20),
+    0 0 12px rgba(255, 255, 255, 0.55);
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+/* Tablet — card scales down, dots move to bottom center */
+@media (max-width: 900px) {
+  .story-card {
+    width: clamp(320px, calc(100vw - 96px), 500px);
+  }
+  .story-card-title { font-size: 22px; }
+  .story-card-copy  { font-size: 16px; }
+}
+
+@media (max-width: 768px) {
+  .story-card {
+    width: calc(100vw - 48px);
+    height: auto;
+    min-height: 460px;
+    padding: 36px 32px;
+  }
+
+  .story-slides { height: auto; }
+
+  .story-slide {
+    position: relative;
+    inset: auto;
+    transform: none;
+    transition: opacity 400ms ease;
+    display: none;
+  }
+
+  .story-slide.is-active { display: flex; }
+
+  /* Dots: horizontal row at viewport bottom */
+  .story-nav {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: 28px;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  /* Tooltip above dot on mobile */
+  .story-nav-dot::before {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: calc(100% + 10px);
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 620px) {
+  .story-card {
+    width: calc(100vw - 32px);
+    padding: 28px 24px;
+    min-height: 440px;
+  }
+  .story-card-title { font-size: 19px; margin-bottom: 16px; }
+  .story-card-copy  { font-size: 14px; }
+  .story-tag        { font-size: 13px; padding: 8px 12px; }
+}
+
+@media (max-width: 380px) {
+  .story-card { padding: 22px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-slide { transition: opacity 200ms ease !important; transform: none !important; }
+}
+
+/* ============================================================
+   INDUSTRIES — CLOSING / CTA SECTION
+============================================================ */
+
+.industries-closing {
+  position: relative;
+  background: #060e1a;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* ---- Top: two-column grid ---- */
+.industries-closing-top {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  gap: 0 64px;
+  padding: 100px 80px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.industries-closing-left  { padding-right: 16px; }
+.industries-closing-right {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Vertical separator */
+.industries-closing-divider-v {
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.13);
+}
+
+/* ---- Headline ---- */
+.industries-closing-headline {
+  font-size: clamp(30px, 3.4vw, 52px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0;
+}
+
+.industries-closing-accent-wrap {
+  display: block;
+  margin-top: 2px;
+}
+
+.industries-closing-accent {
+  display: block;
+  font-style: italic;
+  color: #dcf166;
+}
+
+.industries-closing-underline {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin-top: 4px;
+}
+
+/* ---- Right column ---- */
+.industries-closing-copy {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.72;
+  color: rgba(255, 255, 255, 0.58);
+  margin: 0;
+}
+
+.industries-closing-rule {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 0;
+}
+
+/* ---- CTA ---- */
+.industries-closing-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  color: #fff;
+  transition: opacity 280ms ease;
+}
+
+.industries-closing-cta:hover { opacity: 0.72; }
+
+.industries-closing-cta-icon {
+  flex-shrink: 0;
+  line-height: 0;
+  color: #fff;
+}
+
+.industries-closing-cta-label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.industries-closing-cta-title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.industries-closing-cta-sub {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+/* ---- Visual: background image + floating tags ---- */
+.industries-closing-visual {
+  position: relative;
+  width: 100%;
+  height: 58vh;
+  min-height: 400px;
+  background-image: url('../images/industries/Last%20section.png');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+/* Subtle fade at the top so it blends into the content area */
+.industries-closing-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 30%;
+  background: linear-gradient(to bottom, #060e1a, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- Category tags ---- */
+.industries-closing-tags {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.ic-tag {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: rgba(4, 16, 32, 0.55);
+  border: 1px solid rgba(77, 184, 232, 0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.90);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.ic-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #4db8e8;
+  box-shadow: 0 0 6px 2px rgba(77, 184, 232, 0.70);
+}
+
+/* Tag positions — tuned to the background image glow lines */
+.ic-tag--retail        { left: 11%;  top: 37%; }
+.ic-tag--d2c           { left: 27%;  top: 56%; }
+.ic-tag--manufacturing { left:  6%;  top: 65%; }
+.ic-tag--fashion       { left: 30%;  top: 78%; }
+.ic-tag--politics      { left: 78%;  top: 37%; }
+.ic-tag--hospitality   { left: 64%;  top: 56%; }
+.ic-tag--realestate    { left: 55%;  top: 78%; }
+
+/* ============================================================
+   INDUSTRIES — CLOSING RESPONSIVE
+============================================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .industries-closing-top {
+    gap: 0 48px;
+    padding: 80px 60px 64px;
+  }
+}
+
+/* Stack columns on small tablet / large phone */
+@media (max-width: 860px) {
+  .industries-closing-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 64px 40px 52px;
+  }
+
+  .industries-closing-divider-v {
+    width: 100%;
+    height: 1px;
+    align-self: auto;
+  }
+
+  .industries-closing-left,
+  .industries-closing-right { padding: 0; }
+}
+
+/* Phone */
+@media (max-width: 620px) {
+  .industries-closing-top {
+    padding: 52px 24px 44px;
+    gap: 32px;
+  }
+
+  .industries-closing-headline {
+    font-size: clamp(26px, 7.5vw, 36px);
+  }
+
+  .industries-closing-cta-title { font-size: 22px; }
+
+  /* Shrink visual and switch tags to flex-wrap at bottom */
+  .industries-closing-visual {
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-position: center 30%;
+    background-size: cover;
+  }
+
+  /* Gradient background for the glow area */
+  .industries-closing-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #060e1a 0%, transparent 30%, rgba(6,14,26,0.72) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .industries-closing-tags {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 24px 20px 36px;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .ic-tag {
+    position: static;
+    font-size: 12px;
+    padding: 7px 13px;
+  }
 }
